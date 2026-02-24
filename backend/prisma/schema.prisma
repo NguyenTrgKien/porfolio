@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  sessionId String   @unique  // anonymous session token
+  name      String?
+  email     String?
+  createdAt DateTime @default(now())
+
+  conversations Conversation[]
+
+  @@map("visitor")
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  visitorId Int
+  visitor   Visitor  @relation(fields: [visitorId], references: [id])
+  lastMessage String?
+  isReadByOwner Boolean @default(false)
+
+  messages    Message[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("conversation")
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  content        String
+  role           MessageRole  // "user" hoặc "assistant"
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  isRead Boolean @default(false)
+  createdAt      DateTime     @default(now())
+
+  @@map("message")
+}
+
+enum MessageRole {
+  user
+  owner
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  fullName      String?
+  email     String
+  password  String
+  createdAt DateTime @default(now())
+}

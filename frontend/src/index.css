@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  font-size: 62.5%;
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+#projects,
+#skills,
+#contact,
+#about {
+  scroll-margin-top: 10rem;
+}
+
+
+.loadingBtn{
+  border-top: transparent;
+  border-bottom: transparent;
+  border-right: transparent;
+}
+
