@@ -10,7 +10,7 @@ const routerInit = (app: Express) => {
   contactRoute(router);
   chatRoute(router);
   authRoute(router);
-  return app.use("/api/v1/", router);
+  return app.use("/api/v1", router);
 };
 
 export default routerInit;
