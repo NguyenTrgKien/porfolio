@@ -5,7 +5,6 @@ import { pool } from "./config/db.config";
 import { createServer } from "node:http";
 import { initSocket } from "./config/socket.config";
 import cookieParser from "cookie-parser";
-import seedAdmin from "./seeds/admin.seed";
 const app = express();
 const port = 8080;
 

@@ -11,6 +11,8 @@ const chatService = {
       res.cookie("session_id", sessionId, {
         maxAge: 60 * 60 * 24 * 7 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
       });
 
       await prisma.visitor.create({
