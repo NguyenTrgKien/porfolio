@@ -30,6 +30,7 @@ model Conversation {
   visitorId Int
   visitor   Visitor  @relation(fields: [visitorId], references: [id])
   lastMessage String?
+
   isReadByOwner Boolean @default(false)
 
   messages    Message[]
@@ -56,10 +57,16 @@ enum MessageRole {
   owner
 }
 
-model Admin {
+enum UserRole {
+  admin
+  user
+}
+
+model User {
   id        Int      @id @default(autoincrement())
   fullName      String?
-  email     String
+  email     String @unique
   password  String
+  role      UserRole @default(user) 
   createdAt DateTime @default(now())
 }

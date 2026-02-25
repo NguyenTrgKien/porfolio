@@ -8,7 +8,7 @@ const authController = {
     try {
       const { email, password } = req.body;
 
-      const admin = await prisma.admin.findFirst({ where: { email } });
+      const admin = await prisma.user.findFirst({ where: { email } });
 
       if (!admin) {
         res.status(401).json({ message: "Email or password is incorrect" });

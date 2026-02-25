@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ContactAi from "../../Layouts/ContactAi";
 import Footer from "../../Layouts/Footer";
 import Header from "../../Layouts/Header";
 import Main from "../../Layouts/Main";
 import { axiosInstance } from "../../configs/axiosConfig";
+import socket from "../../configs/socket";
 
 function HomePage() {
+  const [isSession, setIsSession] = useState(false);
   useEffect(() => {
     const getSession = async () => {
       try {
         await axiosInstance.get("/api/v1/chat/session");
+        socket.disconnect();
+        socket.connect();
+        setIsSession(true);
       } catch (error) {
         console.log(error);
       }
@@ -22,7 +27,7 @@ function HomePage() {
       <Header />
       <Main />
       <Footer />
-      <ContactAi />
+      {isSession && <ContactAi />}
     </div>
   );
 }

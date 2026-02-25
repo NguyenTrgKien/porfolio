@@ -6,8 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import avatar from "../assets/images/avatar2.png";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faClose } from "@fortawesome/free-solid-svg-icons";
 import socket from "../configs/socket";
+import type { MessagesType } from "../pages/Admin/Chat";
 
 interface Message {
   role: "owner" | "user";
@@ -21,43 +22,82 @@ function ContactAi() {
   const [messages, setMessages] = useState<Message[]>([]);
   const hasJoined = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const shoudScrollRef = useRef(false);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   useEffect(() => {
-    socket.on("connect", () => {
+    const handleConnect = () => {
       if (!hasJoined.current) {
         hasJoined.current = true;
         socket.emit("private_chat:join");
       }
-    });
+    };
+
+    const handleHistory = ({ messages }: { messages: MessagesType[] }) => {
+      setMessages(messages);
+    };
+
+    const handleReveive = ({ message }: { message: any }) => {
+      setMessages((prev) => [...prev, { role: "owner", content: message }]);
+    };
+
+    socket.on("connect", handleConnect);
 
     if (socket.connected && !hasJoined.current) {
       hasJoined.current = true;
       socket.emit("private_chat:join");
     }
 
-    socket.on("private_chat:history", ({ messages }) => {
-      setMessages(messages);
-    });
+    socket.on("private_chat:history", handleHistory);
 
-    socket.on("private_chat:receive", ({ message }) => {
-      setMessages((prev) => [...prev, { role: "owner", content: message }]);
-      setIsLoading(false);
-    });
+    socket.on("private_chat:receive", handleReveive);
 
     return () => {
-      socket.off("private_chat:receive");
+      socket.off("connect", handleConnect);
+      socket.off("private_chat:receive", handleReveive);
+      socket.off("private_chat:history", handleHistory);
     };
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+
+    if (shoudScrollRef.current) {
+      shoudScrollRef.current = false;
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    if (isAtBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowScrollBtn(true);
+    }
   }, [messages]);
+
+  const handleScroll = () => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
+    setShowScrollBtn(!isAtBottom);
+  };
+
+  const handleScrollIntoNewMessage = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setShowScrollBtn(false);
+  };
 
   const handleSendMessage = () => {
     if (!inputMessage) return;
     if (socket.connected && hasJoined.current) {
       socket.emit("private_chat:send", { message: inputMessage });
       setMessages((prev) => [...prev, { role: "user", content: inputMessage }]);
+      shoudScrollRef.current = true;
       setInputMessage("");
       setIsLoading(true);
     }
@@ -109,14 +149,17 @@ function ContactAi() {
               </div>
               <div className="relative w-full h-[40rem] bg-white rounded-br-xl rounded-bl-xl">
                 <div
+                  ref={scrollContainerRef}
+                  onScroll={handleScroll}
                   className="flex-1 w-full h-[calc(100%-8rem)] overflow-y-auto p-6 space-y-10"
                   style={{ scrollbarWidth: "none" }}
                 >
                   {messages.length > 0 &&
-                    messages.map((message) => {
+                    messages.map((message, index) => {
                       const isUser = message.role === "user";
                       return (
                         <div
+                          key={index}
                           className={`flex items-start gap-4 ${isUser ? "flex-row-reverse" : ""}`}
                         >
                           {!isUser && (
@@ -134,8 +177,19 @@ function ContactAi() {
                         </div>
                       );
                     })}
-                  <div className="" ref={messagesEndRef}></div>
+                  <div ref={messagesEndRef}></div>
                 </div>
+                {showScrollBtn && (
+                  <button
+                    className="absolute bottom-[9rem] right-[2rem] w-12 h-12 bg-white border border-gray-300 rounded-full flex items-center justify-center text-gray-600 cursor-pointer"
+                    onClick={handleScrollIntoNewMessage}
+                  >
+                    <FontAwesomeIcon
+                      icon={faAnglesDown}
+                      className="text-[1.2rem]"
+                    />
+                  </button>
+                )}
                 <div className="absolute bottom-[2rem] px-[2rem] left-0 flex items-center w-full gap-2.5 text-[1.2rem] sm:text-[1.4rem]">
                   <input
                     type="text"

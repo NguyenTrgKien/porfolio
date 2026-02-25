@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import Chat from "./pages/Admin/Chat";
-import PrivateRoute from "./components/privateRoute";
 import LoginAdmin from "./pages/Admin/LoginAdmin";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (

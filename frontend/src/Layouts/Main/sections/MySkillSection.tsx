@@ -147,7 +147,7 @@ function MySkillSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  key={it.id}
+                  key={index}
                   className="flex items-center gap-3"
                 >
                   <img
