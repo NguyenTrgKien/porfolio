@@ -12,7 +12,7 @@ const port = 8080;
 const server = createServer(app);
 
 const corsOption = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://porfolio-rho-one.vercel.app"],
   credentials: true,
 };
 app.use(cors(corsOption));
