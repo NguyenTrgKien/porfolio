@@ -7,14 +7,18 @@ import { axiosInstance } from "../../configs/axiosConfig";
 import socket from "../../configs/socket";
 
 function HomePage() {
-  const [isSession, setIsSession] = useState(false);
+  const [sessionStatus, setSessionStatus] = useState<
+    "loading" | "error" | "ready"
+  >("loading");
   useEffect(() => {
     const getSession = async () => {
       try {
-        await axiosInstance.get("/api/v1/chat/session");
+        await axiosInstance.get("/api/v1/chat/session", { timeout: 10000 });
         socket.disconnect();
+        socket.once("connect", () => {
+          setSessionStatus("ready");
+        });
         socket.connect();
-        setIsSession(true);
       } catch (error) {
         console.log(error);
       }
@@ -27,7 +31,7 @@ function HomePage() {
       <Header />
       <Main />
       <Footer />
-      {isSession && <ContactAi />}
+      {<ContactAi status={sessionStatus} />}
     </div>
   );
 }

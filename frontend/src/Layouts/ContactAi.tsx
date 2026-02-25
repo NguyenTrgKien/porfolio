@@ -15,7 +15,7 @@ interface Message {
   content: string;
 }
 
-function ContactAi() {
+function ContactAi({ status }: { status: "loading" | "error" | "ready" }) {
   const [showModal, setShowModal] = useState(false);
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,8 @@ function ContactAi() {
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   useEffect(() => {
-    const handleConnect = () => {
+    if (status !== "ready") return;
+    const join = () => {
       if (!hasJoined.current) {
         hasJoined.current = true;
         socket.emit("private_chat:join");
@@ -38,27 +39,23 @@ function ContactAi() {
       setMessages(messages);
     };
 
-    const handleReveive = ({ message }: { message: any }) => {
+    const handleReceive = ({ message }: { message: any }) => {
       setMessages((prev) => [...prev, { role: "owner", content: message }]);
     };
 
-    socket.on("connect", handleConnect);
+    socket.on("connect", join);
+    socket.on("private_chat:history", handleHistory);
+    socket.on("private_chat:receive", handleReceive);
 
     if (socket.connected && !hasJoined.current) {
-      hasJoined.current = true;
-      socket.emit("private_chat:join");
+      join();
     }
-
-    socket.on("private_chat:history", handleHistory);
-
-    socket.on("private_chat:receive", handleReveive);
-
     return () => {
-      socket.off("connect", handleConnect);
-      socket.off("private_chat:receive", handleReveive);
+      socket.off("connect", join);
+      socket.off("private_chat:receive", handleReceive);
       socket.off("private_chat:history", handleHistory);
     };
-  }, []);
+  }, [status]);
 
   useEffect(() => {
     const el = scrollContainerRef.current;
@@ -148,75 +145,93 @@ function ContactAi() {
                 </div>
               </div>
               <div className="relative w-full h-[40rem] bg-white rounded-br-xl rounded-bl-xl">
-                <div
-                  ref={scrollContainerRef}
-                  onScroll={handleScroll}
-                  className="flex-1 w-full h-[calc(100%-8rem)] overflow-y-auto p-6 space-y-10"
-                  style={{ scrollbarWidth: "none" }}
-                >
-                  {messages.length > 0 &&
-                    messages.map((message, index) => {
-                      const isUser = message.role === "user";
-                      return (
-                        <div
-                          key={index}
-                          className={`flex items-start gap-4 ${isUser ? "flex-row-reverse" : ""}`}
-                        >
-                          {!isUser && (
-                            <img
-                              src={avatar}
-                              alt="avatar"
-                              className="w-12 sm:w-16 h-12 sm:h-16 rounded-full object-cover border border-gray-200"
-                            />
-                          )}
-                          <div
-                            className={`text-[1.2rem] sm:text-[1.4rem] max-w-[25rem] border border-gray-100 rounded-xl  p-3.5 ${isUser ? "bg-amber-500 text-white" : "bg-gray-100 text-gray-600"}`}
-                          >
-                            {message.content}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  <div ref={messagesEndRef}></div>
-                </div>
-                {showScrollBtn && (
-                  <button
-                    className="absolute bottom-[9rem] right-[2rem] w-12 h-12 bg-white border border-gray-300 rounded-full flex items-center justify-center text-gray-600 cursor-pointer"
-                    onClick={handleScrollIntoNewMessage}
-                  >
-                    <FontAwesomeIcon
-                      icon={faAnglesDown}
-                      className="text-[1.2rem]"
-                    />
-                  </button>
+                {status === "loading" && (
+                  <div className="flex flex-col items-center justify-center h-full gap-4 text-gray-400">
+                    <div className="w-12 h-12 rounded-full border-4 border-amber-500 border-t-transparent animate-spin" />
+                    <p className="text-[1.3rem]">Đang kết nối server...</p>
+                  </div>
                 )}
-                <div className="absolute bottom-[2rem] px-[2rem] left-0 flex items-center w-full gap-2.5 text-[1.2rem] sm:text-[1.4rem]">
-                  <input
-                    type="text"
-                    name="message"
-                    className="flex-1 w-full h-[4.2rem] border border-gray-400 rounded-full outline-none focus:border-amber-500 placeholder:text-gray-400 pl-8 text-gray-800"
-                    placeholder="Enter message..."
-                    value={inputMessage ?? ""}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        handleSendMessage();
-                      }
-                    }}
-                  />
-                  <button
-                    className="flex items-center justify-center h-[4.2rem] w-[4.2rem] rounded-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white"
-                    type="button"
-                    disabled={isLoading}
-                    onClick={handleSendMessage}
-                  >
-                    {isLoading ? (
-                      <div className="loadingBtn w-[2.4rem] h-[2.4rem] rounded-full border-3 border-white animate-spin"></div>
-                    ) : (
-                      <FontAwesomeIcon icon={faPaperPlane} />
+
+                {status === "error" && (
+                  <div className="flex flex-col items-center justify-center h-full gap-4 text-gray-400">
+                    <p className="text-[1.3rem]">Không thể kết nối server.</p>
+                    <p className="text-[1.2rem]">Vui lòng thử lại sau.</p>
+                  </div>
+                )}
+
+                {status === "ready" && (
+                  <>
+                    <div
+                      ref={scrollContainerRef}
+                      onScroll={handleScroll}
+                      className="flex-1 w-full h-[calc(100%-8rem)] overflow-y-auto p-6 space-y-10"
+                      style={{ scrollbarWidth: "none" }}
+                    >
+                      {messages.length > 0 &&
+                        messages.map((message, index) => {
+                          const isUser = message.role === "user";
+                          return (
+                            <div
+                              key={index}
+                              className={`flex items-start gap-4 ${isUser ? "flex-row-reverse" : ""}`}
+                            >
+                              {!isUser && (
+                                <img
+                                  src={avatar}
+                                  alt="avatar"
+                                  className="w-12 sm:w-16 h-12 sm:h-16 rounded-full object-cover border border-gray-200"
+                                />
+                              )}
+                              <div
+                                className={`text-[1.2rem] sm:text-[1.4rem] max-w-[25rem] border border-gray-100 rounded-xl  p-3.5 ${isUser ? "bg-amber-500 text-white" : "bg-gray-100 text-gray-600"}`}
+                              >
+                                {message.content}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      <div ref={messagesEndRef}></div>
+                    </div>
+                    {showScrollBtn && (
+                      <button
+                        className="absolute bottom-[9rem] right-[2rem] w-12 h-12 bg-white border border-gray-300 rounded-full flex items-center justify-center text-gray-600 cursor-pointer"
+                        onClick={handleScrollIntoNewMessage}
+                      >
+                        <FontAwesomeIcon
+                          icon={faAnglesDown}
+                          className="text-[1.2rem]"
+                        />
+                      </button>
                     )}
-                  </button>
-                </div>
+                    <div className="absolute bottom-[2rem] px-[2rem] left-0 flex items-center w-full gap-2.5 text-[1.2rem] sm:text-[1.4rem]">
+                      <input
+                        type="text"
+                        name="message"
+                        className="flex-1 w-full h-[4.2rem] border border-gray-400 rounded-full outline-none focus:border-amber-500 placeholder:text-gray-400 pl-8 text-gray-800"
+                        placeholder="Enter message..."
+                        value={inputMessage ?? ""}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            handleSendMessage();
+                          }
+                        }}
+                      />
+                      <button
+                        className="flex items-center justify-center h-[4.2rem] w-[4.2rem] rounded-full bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white"
+                        type="button"
+                        disabled={isLoading}
+                        onClick={handleSendMessage}
+                      >
+                        {isLoading ? (
+                          <div className="loadingBtn w-[2.4rem] h-[2.4rem] rounded-full border-3 border-white animate-spin"></div>
+                        ) : (
+                          <FontAwesomeIcon icon={faPaperPlane} />
+                        )}
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>
