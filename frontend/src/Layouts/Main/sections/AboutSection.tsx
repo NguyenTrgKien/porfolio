@@ -12,47 +12,48 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
-
-const infoUser = [
-  {
-    id: 1,
-    title: "Name",
-    description: "Nguyễn Trung Kiên",
-    icon: faUser,
-  },
-  {
-    id: 2,
-    title: "Location",
-    description: "Cai Rang, Can Tho City",
-    icon: faLocationDot,
-  },
-  {
-    id: 3,
-    title: "Email",
-    description: "nguyentrungkien040921@gmail.com",
-    icon: faEnvelope,
-  },
-  {
-    id: 4,
-    title: "Studing At",
-    description: "Tay Do University, Can Tho City",
-    icon: faHome,
-  },
-  {
-    id: 5,
-    title: "Phone",
-    description: "0357 124 853",
-    icon: faPhone,
-  },
-  {
-    id: 6,
-    title: "Profession",
-    description: "Student",
-    icon: faBriefcase,
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function AboutSection() {
+  const { t } = useTranslation();
+  const infoUser = [
+    {
+      id: 1,
+      title: "Name",
+      description: "Nguyễn Trung Kiên",
+      icon: faUser,
+    },
+    {
+      id: 2,
+      title: t(`about.${"location"}`),
+      description: "Cai Rang, Can Tho City",
+      icon: faLocationDot,
+    },
+    {
+      id: 3,
+      title: "Email",
+      description: "nguyentrungkien040921@gmail.com",
+      icon: faEnvelope,
+    },
+    {
+      id: 4,
+      title: t(`about.${"studyat"}`),
+      description: "Tay Do University, Can Tho City",
+      icon: faHome,
+    },
+    {
+      id: 5,
+      title: t(`about.${"phone"}`),
+      description: "0357 124 853",
+      icon: faPhone,
+    },
+    {
+      id: 6,
+      title: t(`about.${"profession"}`),
+      description: t(`introduction.${"student"}`),
+      icon: faBriefcase,
+    },
+  ];
   return (
     <motion.div
       initial={{ opacity: 0, y: 60 }}
@@ -65,10 +66,10 @@ function AboutSection() {
         className="grid grid-col-1 sm:grid-cols-[1fr_2fr] xl:grid-cols-2 gap-[2rem] items-center"
       >
         <h3 className="block sm:hidden text-[1.8rem] font-bold mb-2 text-center">
-          About Me
+          {t(`about.${"aboutme"}`)}
         </h3>
 
-        <div className="xl:w-[40rem] xl:h-[45rem] w-[20rem] h-[20rem] rounded-full mx-auto shadow-xl border border-gray-100 xl:rounded-xl sm:mb-0 mb-2">
+        <div className="xl:w-[40rem] xl:h-[45rem] w-[20rem] h-[20rem] rounded-full mx-auto shadow-xl border border-gray-100 dark:border-gray-600 xl:rounded-xl sm:mb-0 mb-2">
           <img
             src={avatar}
             alt="image"
@@ -77,7 +78,7 @@ function AboutSection() {
         </div>
         <div>
           <h3 className="hidden sm:block md:text-[2.8rem] ld:text-[3.4rem] font-bold mb-8">
-            About Me
+            {t(`about.${"aboutme"}`)}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {infoUser.map((it) => {
@@ -98,10 +99,14 @@ function AboutSection() {
             })}
           </div>
           <div className="mt-12 flex items-center justify-center sm:justify-start">
-            <button className="px-8 py-3.5 flex items-center gap-2.5 bg-amber-500 text-white rounded-full hover:bg-amber-600 transition-colors duration-300 text-[1.2rem] md:text-[1.4rem]">
+            <a
+              download
+              href="/"
+              className="px-8 py-3.5 flex items-center gap-2.5 bg-amber-500 text-white rounded-full hover:bg-amber-600 transition-colors duration-300 text-[1.2rem] md:text-[1.4rem]"
+            >
               <FontAwesomeIcon icon={faDownload} />
-              <span>Download My Cv</span>
-            </button>
+              <span>{t(`about.${"downloadcv"}`)}</span>
+            </a>
           </div>
         </div>
       </section>

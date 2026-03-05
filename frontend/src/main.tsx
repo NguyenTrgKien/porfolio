@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import ThemeProvider from "./contexts/ThemeContext.tsx";
 import { ToastContainer, Bounce } from "react-toastify";
 import { DeviceProvider } from "./contexts/DeviceContext.tsx";
+import "./i18n/i18n.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import routerInit from "./routes/routerInit.route";
@@ -11,7 +13,7 @@ const port = 8080;
 const server = createServer(app);
 
 const corsOption = {
-  origin: ["https://porfolio-rho-one.vercel.app"],
+  origin: ["https://porfolio-rho-one.vercel.app", "http://localhost:5173"],
   credentials: true,
 };
 app.use(cors(corsOption));

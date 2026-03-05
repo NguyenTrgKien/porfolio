@@ -6,8 +6,11 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
+import { nav_list } from "./Header";
 
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer
       id="projects"
@@ -41,28 +44,20 @@ function Footer() {
           </div>
         </div>
         <div className="space-y-8 text-center md:text-start">
-          <h4 className="font-bold text-[1.6rem]">Navigation</h4>
+          <h4 className="font-bold text-[1.6rem]">{t("navigation")}</h4>
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <a href="#home" className="flex items-center space-x-2.5">
-              <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
-              <span>Home</span>
-            </a>
-            <a href="#about" className="flex items-center space-x-2.5">
-              <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
-              <span>About</span>
-            </a>
-            <a href="#skills" className="flex items-center space-x-2.5">
-              <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
-              <span>Skills</span>
-            </a>
-            <a href="#projects" className="flex items-center space-x-2.5">
-              <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
-              <span>Projects</span>
-            </a>
-            <a href="#contact" className="flex items-center space-x-2.5">
-              <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
-              <span>Contact</span>
-            </a>
+            {nav_list.map((nav, index) => {
+              return (
+                <a
+                  key={index}
+                  href={nav.link}
+                  className="flex items-center space-x-2.5"
+                >
+                  <FontAwesomeIcon icon={faCircle} className="text-[.4rem]" />
+                  <span>{t(`nav.${nav.name}`)}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
         <div className="space-y-8 text-center md:text-start">
@@ -83,7 +78,9 @@ function Footer() {
           </div>
         </div>
         <div className="space-y-8 text-center md:text-start">
-          <h4 className="font-bold text-[1.6rem]">Get In Touch</h4>
+          <h4 className="font-bold text-[1.6rem]">
+            {t(`footer.${"getintouch"}`)}
+          </h4>
           <div className="flex flex-col space-y-4 items-center md:items-start">
             <div className="flex items-center  gap-2.5">
               <span className="p-1.5 rounded-xl border border-gray-600">
@@ -108,8 +105,10 @@ function Footer() {
       </div>
       <div className="w-full border-t border-t-gray-700 my-[2rem]"></div>
       <div className="md:flex md:items-center md:justify-between text-center">
-        <p>2026 Trung Kiên, All rights reserved.</p>
-        <p>Crafted with ❤️ and in Can Tho City</p>
+        <p>2026 Trung Kiên, {t(`footer.${"allright"}`)}.</p>
+        <p>
+          {t(`footer.${"crafted"}`)} ❤️ {t(`footer.${"and"}`)} in Can Tho City
+        </p>
       </div>
     </footer>
   );

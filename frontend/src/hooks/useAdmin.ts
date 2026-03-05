@@ -18,7 +18,7 @@ export function useAdmin() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => { 
     fetchMe()
       .then((data) => setUser(data))
       .finally(() => setLoading(false));

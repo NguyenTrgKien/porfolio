@@ -5,7 +5,7 @@ import registerChatSocket from "../modules/chat/sockets/registerChatSocket";
 export const initSocket = (server: HttpServer) => {
   const io = new Server(server, {
     cors: {
-      origin: ["https://porfolio-rho-one.vercel.app"],
+      origin: ["https://porfolio-rho-one.vercel.app", "http://localhost:5173"],
       methods: ["GET", "POST"],
       credentials: true,
     },

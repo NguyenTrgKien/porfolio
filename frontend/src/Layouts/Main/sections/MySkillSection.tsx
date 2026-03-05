@@ -14,6 +14,7 @@ import vercelLogo from "../../../assets/images/vercel_logo.svg";
 import renderLogo from "../../../assets/images/render_logo.png";
 import AnimateMotion from "../../../components/AnimateMotion";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const skillsFrontend = [
   {
@@ -95,18 +96,18 @@ const skillsDevOps = [
 ];
 
 function MySkillSection() {
+  const { t } = useTranslation();
   return (
     <section id="skills">
       <div className="text-center mt-[12rem]">
         <AnimateMotion delay={0.2}>
           <h3 className="text-[1.8rem] md:text-[2.8rem] ld:text-[3.4rem] font-bold">
-            My Skills
+            {t(`my_skill.${"title"}`)}
           </h3>
         </AnimateMotion>
         <AnimateMotion delay={0.3}>
           <p className="mt-4 text-[1.2rem] md:text-[1.6rem]">
-            Synthesis of skills and technologies that I have accumulates through
-            many projects
+            {t(`my_skill.${"sub_title"}`)}
           </p>
         </AnimateMotion>
       </div>

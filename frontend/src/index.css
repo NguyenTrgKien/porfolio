@@ -5,8 +5,8 @@
 
 html {
   font-size: 62.5%;
-  font-family: "Inter", sans-serif;
   scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -20,10 +20,8 @@ body {
   scroll-margin-top: 10rem;
 }
 
-
-.loadingBtn{
+.loadingBtn {
   border-top: transparent;
   border-bottom: transparent;
   border-right: transparent;
 }
-

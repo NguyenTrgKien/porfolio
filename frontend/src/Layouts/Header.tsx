@@ -6,38 +6,47 @@ import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import FollowMeModal from "../components/FollowMeModal";
 
-const nav_list = [
+// eslint-disable-next-line react-refresh/only-export-components
+export const nav_list = [
   {
     id: 1,
-    name: "HOME",
+    name: "home",
     link: "home",
   },
   {
     id: 2,
-    name: "ABOUT",
+    name: "home",
     link: "about",
   },
   {
     id: 3,
-    name: "SKILLS",
+    name: "skills",
     link: "skills",
   },
   {
     id: 4,
-    name: "PROJECTS",
+    name: "projects",
     link: "projects",
   },
   {
     id: 5,
-    name: "CONTACT",
+    name: "contact",
     link: "contact",
   },
 ];
 
 function Header() {
+  const { t, i18n } = useTranslation();
   const { toggleTheme } = useTheme();
   const [openMenu, setOpenMenu] = useState(false);
+  const [showFollowMe, setShowFollowMe] = useState(false);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   return (
     <footer className="fixed top-0 left-0 w-full h-[6rem] flex items-center justify-between z-[900] bg-white dark:bg-[#000029] px-[2rem] md:px-[3rem] lg:px-[5rem] xl:px-[10rem] transition-colors duration-500 shadow-md">
@@ -52,15 +61,26 @@ function Header() {
             <a
               href={`#${it.link}`}
               key={it.id}
-              className="relative group cursor-pointer block hover:text-amber-500 transition-col duration-200"
+              className="relative group cursor-pointer block hover:text-amber-500 transition-col duration-200 uppercase"
             >
-              {it.name}
+              {t(`nav.${it.name}`)}
             </a>
           );
         })}
       </nav>
 
       <div className="flex items-center gap-5">
+        <select
+          className="text-gray-700 dark:text-gray-100 outline-none hover:cursor-pointer"
+          onChange={(e) => changeLanguage(e.target.value)}
+        >
+          <option value="en" className="text-gray-600">
+            EN
+          </option>
+          <option value="vi" className="text-gray-600">
+            VI
+          </option>
+        </select>
         <button
           className="relative w-[5.5rem] h-[2.8rem] rounded-full bg-gradient-to-r from-amber-300 to-orange-400 dark:from-slate-700 dark:to-slate-900 transition-all duration-300 shadow-md focus:outline-none p-1 border dark:border-gray-500 border-gray-200"
           onClick={toggleTheme}
@@ -70,8 +90,11 @@ function Header() {
             <img src={moonIcon} alt="moon" className="w-4 hidden dark:block" />
           </span>
         </button>
-        <button className="hidden md:block px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-md text-white">
-          login
+        <button
+          className="hidden md:block px-6 py-2 border-1 border-amber-500 rounded-full text-amber-500 hover:border-amber-600 hover:text-amber-600 transition-colors duration-300 cursor-pointer"
+          onClick={() => setShowFollowMe(true)}
+        >
+          {t("follow_me")}
         </button>
 
         <button
@@ -109,17 +132,22 @@ function Header() {
                   href={`#${it.link}`}
                   key={it.id}
                   onClick={() => setOpenMenu(false)}
-                  className="cursor-pointer hover:text-amber-500 transition-colors duration-200"
+                  className="cursor-pointer hover:text-amber-500 transition-colors duration-200 uppercase"
                 >
-                  {it.name}
+                  {t(`nav.${it.name}`)}
                 </a>
               ))}
 
               <button className="px-6 py-2 bg-amber-500 hover:bg-amber-600 rounded-md text-white">
-                login
+                {t("login")}
               </button>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showFollowMe && (
+          <FollowMeModal onClose={() => setShowFollowMe(false)} />
         )}
       </AnimatePresence>
     </footer>

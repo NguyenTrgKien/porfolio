@@ -7,13 +7,11 @@ const messageController = {
   //   try {
   //     const data = req.body as CreateMessageDTO;
   //     const { email, sessionId } = data;
-
   //     if (!email && sessionId) {
   //       return res
   //         .status(400)
   //         .json({ message: "Vui lòng truyền đầy đủ thông t in!" });
   //     }
-
   //     await messageService.create(data);
   //     res.status(201).json({
   //       message: "Gửi tin nhắn thành công!",

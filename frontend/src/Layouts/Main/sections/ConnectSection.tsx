@@ -4,8 +4,10 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import React, { useState } from "react";
 import { axiosInstance } from "../../../configs/axiosConfig";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function ConnectSection() {
+  const { t } = useTranslation();
   const [data, setData] = useState({
     fullName: "",
     email: "",
@@ -42,7 +44,7 @@ function ConnectSection() {
     if (data.fullName === "") {
       setError((prev) => ({
         ...prev,
-        fullName: "Please enter your FullName!",
+        fullName: t(`connect.${"err_fullname"}`),
       }));
       isError = true;
     }
@@ -50,7 +52,7 @@ function ConnectSection() {
     if (data.email === "") {
       setError((prev) => ({
         ...prev,
-        email: "Please enter your Email!",
+        email: t(`connect.${"err_email"}`),
       }));
       isError = true;
     }
@@ -58,7 +60,7 @@ function ConnectSection() {
     if (data.message === "") {
       setError((prev) => ({
         ...prev,
-        message: "Please enter your Message!",
+        message: t(`connect.${"err_message"}`),
       }));
       isError = true;
     }
@@ -71,12 +73,12 @@ function ConnectSection() {
       const res = await axiosInstance.post("/api/v1/contact", data);
 
       if (res.status === 201) {
-        toast.success("Đã gửi email thành công");
+        toast.success(t(`connect.${"success"}}`));
         resetForm();
       }
     } catch (error) {
       console.log(error);
-      toast.error("Đã có lỗi xảy ra. Vui lòng thử lại!");
+      toast.error(t(`connect.${"error"}}`));
     } finally {
       setIsLoading(false);
     }
@@ -86,31 +88,32 @@ function ConnectSection() {
     <section id="contact" className="text-center mt-[12rem] mb-[5rem]">
       <AnimateMotion delay={0.2}>
         <h3 className="text-[1.8rem] md:text-[2.8rem] ld:text-[3.4rem] font-bold">
-          Let's Connect
+          {t(`connect.${"let_connect"}`)}
         </h3>
       </AnimateMotion>
       <AnimateMotion delay={0.3}>
         <p className="text-[1.4rem] md:text-[1.6rem] mt-4">
-          I'd love to collaborate and share creative ideas
+          {t(`connect.${"description"}`)}
         </p>
       </AnimateMotion>
 
       <AnimateMotion delay={0.2}>
         <div className="w-full h-auto mt-[4rem] text-[1.2rem] md:text-[1.4rem]">
-          <div className="md:w-[60%] lg:w-[50%] mx-auto dark:border dark:border-gray-500 rounded-xl p-6 md:p-8 lg:p-12 border border-gray-100 shadow-md">
+          <div className="md:w-[60%] lg:w-[50%] mx-auto dark:border dark:border-gray-600 rounded-xl p-6 md:p-8 lg:p-12 border border-gray-100 shadow-md">
             <h3 className="md:text-[1.6rem] lg:text-[1.8rem] font-bold text-start">
-              Send Message
+              {t(`connect.${"send_message"}`)}
             </h3>
             <div className="flex flex-col items-start gap-2.5 mt-8">
               <label htmlFor="fullName">
-                Full Name <span className="text-red-500">*</span>
+                {t(`connect.${"fullname"}`)}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 name="fullName"
                 id="fullName"
                 value={data.fullName}
-                className="w-full h-[4.2rem] border border-gray-400 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
                 placeholder="FullName..."
                 onChange={handleChangeInput}
               />
@@ -126,7 +129,7 @@ function ConnectSection() {
                 name="email"
                 id="email"
                 value={data.email}
-                className="w-full h-[4.2rem] border border-gray-400 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
                 placeholder="Email..."
                 onChange={(e) => {
                   handleChangeInput(e);
@@ -137,14 +140,15 @@ function ConnectSection() {
 
             <div className="flex flex-col items-start gap-2.5 mt-8">
               <label htmlFor="message">
-                Message <span className="text-red-500">*</span>
+                {t(`connect.${"message"}`)}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <textarea
                 rows={5}
                 name="message"
                 id="message"
                 value={data.message}
-                className="w-full border border-gray-400 outline-none p-4 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                className="w-full border border-gray-400 dark:border-gray-600 outline-none p-4 rounded-md focus:border-amber-500 placeholder:text-gray-500"
                 placeholder="Message..."
                 onChange={handleChangeInput}
               />
@@ -161,7 +165,7 @@ function ConnectSection() {
                 "Đang gửi...  "
               ) : (
                 <>
-                  <span>Send</span>
+                  <span>{t(`connect.${"send"}`)}</span>
                   <FontAwesomeIcon icon={faPaperPlane} />
                 </>
               )}

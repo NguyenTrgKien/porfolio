@@ -5,10 +5,12 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import avatar from "../../../assets/images/avatar2.png";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 function IntroductionSection() {
+  const { t } = useTranslation();
   const typedRef = useTyped({
-    strings: ["Student", "Backend Developer"],
+    strings: [t(`introduction.${"student"}`), "Backend Developer"],
     typeSpeed: 60,
     backSpeed: 50,
     loop: true,
@@ -27,13 +29,13 @@ function IntroductionSection() {
       >
         <div>
           <p className="md:text-[1.6rem] lg:text-[2rem] md:font-bold md:text-start text-center">
-            Hello My name is
+            {t(`introduction.${"hello"}`)}
           </p>
           <h2 className="text-[3rem] md:text-[4rem] lg:text-[6rem] font-semibold font-mono md:text-start text-center">
             Nguyễn Trung Kiên
           </h2>
           <div className="flex items-center justify-center md:justify-start md:text-[1.6rem] lg:text-[2rem]">
-            <p className=" font-bold mr-3">I'm a</p>
+            <p className=" font-bold mr-3">{t(`introduction.${"iam"}`)}</p>
             <p className=" font-bold text-cyan-500" ref={typedRef}></p>
           </div>
 
@@ -65,14 +67,14 @@ function IntroductionSection() {
               href="#projects"
               className="px-10 py-3.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white uppercase  transition-colors duration-300 cursor-pointer space-x-2.5"
             >
-              <span>view projects</span>
+              <span>{t(`introduction.${"view_project"}`)}</span>
               <FontAwesomeIcon icon={faArrowRight} />
             </a>
             <a
               href="#contact"
               className="px-10 py-3.5 rounded-full border hover:bg-amber-500 border-amber-500 text-amber-600 dark:text-white uppercase hover:text-white transition-colors duration-300 cursor-pointer space-x-2.5"
             >
-              <span>contact me</span>
+              <span>{t(`introduction.${"contact_me"}`)}</span>
               <FontAwesomeIcon icon={faArrowRight} />
             </a>
           </div>

@@ -1,0 +1,63 @@
+{
+  "follow_me": "Theo dõi tôi",
+  "contact_me": "Liên hệ với tôi",
+  "let_connect": "Hãy kết nối và cùng nhau phát triển",
+  "nav": {
+    "navigation": "Điều hướng",
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "skills": "Kỹ năng",
+    "projects": "Dự án",
+    "contact": "Liên hệ"
+  },
+  "footer": {
+    "project": "Dự án",
+    "getintouch": "Liên hệ",
+    "allright": "Đã đăng ký bản quyền",
+    "crafted": "Được tạo với",
+    "and": "và"
+  },
+  "about": {
+    "aboutme": "Về tôi",
+    "location": "Địa điểm",
+    "studyat": "Học tại",
+    "phone": "Điện thoại",
+    "profession": "Nghề nghiệp",
+    "downloadcv": "Tải CV của tôi"
+  },
+  "connect": {
+    "let_connect": "Hãy kết nối",
+    "description": "Tôi rất mong được hợp tác và chia sẻ những ý tưởng sáng tạo",
+    "send_message": "Gửi tin nhắn",
+    "fullname": "Họ và tên",
+    "message": "Tin nhắn",
+    "send": "Gửi",
+    "err_fullname": "Vui lòng nhập họ và tên!",
+    "err_email": "Vui lòng nhập email!",
+    "err_message": "Vui lòng nhập tin nhắn!",
+    "success": "Gửi email thành công",
+    "error": "Có lỗi xảy ra. Vui lòng thử lại!"
+  },
+  "introduction": {
+    "student": "Sinh viên",
+    "hello": "Xin chào, tôi là",
+    "iam": "Tôi là một",
+    "view_project": "Xem dự án",
+    "contact_me": "Liên hệ tôi"
+  },
+  "my_project": {
+    "title": "Dự án của tôi",
+    "sub_title": "Khám phá các dự án sáng tạo và giải pháp công nghệ mà tôi đã phát triển",
+    "tech": "Công nghệ",
+    "live_demo": "Xem trực tiếp",
+    "web_development": "Phát triển web",
+    "project": {
+      "name": "Quản lý bán hàng quần áo",
+      "description": "Quản lý bán hàng quần áo là một ứng dụng web giúp quản lý sản phẩm, tồn kho, đơn hàng và thông tin khách hàng trong cửa hàng bán lẻ."
+    }
+  },
+  "my_skill": {
+    "title": "Kỹ năng của tôi",
+    "sub_title": "Tổng hợp các kỹ năng và công nghệ mà tôi đã tích lũy qua nhiều dự án"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "follow_me": "Follow Me",
+  "contact_me": "Contact With Me",
+  "let_connect": "Let's connect and grow together",
+  "nav": {
+    "navigation": "Navigation",
+    "home": "HOME",
+    "about": "ABOUT",
+    "skills": "SKILLS",
+    "projects": "PROJECTS",
+    "contact": "CONTACT"
+  },
+  "footer": {
+    "project": "Projects",
+    "getintouch": "Get In Touch",
+    "allright": "All rights reserved",
+    "crafted": "Crafted with",
+    "and": "and"
+  },
+  "about": {
+    "aboutme": "About me",
+    "location": "Location",
+    "studyat": "Studing At",
+    "phone": "Phone",
+    "profession": "Profession",
+    "downloadcv": "Download My Cv"
+  },
+  "connect": {
+    "let_connect": "Let's Connect",
+    "description": "I'd love to collaborate and share creative ideas",
+    "send_message": "Send Message",
+    "fullname": "Full Name",
+    "message": "Message",
+    "send": "Send",
+    "err_fullname": "Please enter your FullName!",
+    "err_email": "Please enter your Email!",
+    "err_message": "Please enter your Message!",
+    "success": "Sent email success",
+    "error": "Error. Please try again!"
+  },
+  "introduction": {
+    "student": "Student",
+    "hello": "Hello My name is",
+    "iam": "I'm a",
+    "view_project": "view projects",
+    "contact_me": "contact me"
+  },
+  "my_project": {
+    "title": "My Projects",
+    "sub_title": "Explore the innovative projects and technology solutions I have developed",
+    "tech": "Technologies",
+    "live_demo": "Live Demo",
+    "web_development": "Web Development",
+    "project": {
+      "name": "Clothing Sales Manager",
+      "description": "Clothing Sales Manager is a web application that helps manage clothing products, inventory, orders, and customer information in a retail store."
+    }
+  },
+  "my_skill": {
+    "title": "My Skills",
+    "sub_title": "Synthesis of skills and technologies that I have accumulates through many projects"
+  }
+}
