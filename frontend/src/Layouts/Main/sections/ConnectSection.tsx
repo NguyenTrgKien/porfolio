@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimateMotion from "../../../components/AnimateMotion";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import React, { useState } from "react";
-import { axiosInstance } from "../../../configs/axiosConfig";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import emailjs from "@emailjs/browser";
 
 function ConnectSection() {
   const { t } = useTranslation();
@@ -39,7 +39,8 @@ function ConnectSection() {
       message: "",
     });
   };
-  const handleSend = async () => {
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     let isError = false;
     if (data.fullName === "") {
       setError((prev) => ({
@@ -70,12 +71,21 @@ function ConnectSection() {
     }
     setIsLoading(true);
     try {
-      const res = await axiosInstance.post("/api/v1/contact", data);
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: data.fullName,
+          email: data.email,
+          message: data.message,
+          title: "Portfolio Contact",
+          time: new Date().toLocaleString(),
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      );
 
-      if (res.status === 201) {
-        toast.success(t(`connect.${"success"}}`));
-        resetForm();
-      }
+      toast.success(t(`connect.${"success"}`));
+      resetForm();
     } catch (error) {
       console.log(error);
       toast.error(t(`connect.${"error"}}`));
@@ -100,76 +110,77 @@ function ConnectSection() {
       <AnimateMotion delay={0.2}>
         <div className="w-full h-auto mt-[4rem] text-[1.2rem] md:text-[1.4rem]">
           <div className="md:w-[60%] lg:w-[50%] mx-auto dark:border dark:border-gray-600 rounded-xl p-6 md:p-8 lg:p-12 border border-gray-100 shadow-md">
-            <h3 className="md:text-[1.6rem] lg:text-[1.8rem] font-bold text-start">
-              {t(`connect.${"send_message"}`)}
-            </h3>
-            <div className="flex flex-col items-start gap-2.5 mt-8">
-              <label htmlFor="fullName">
-                {t(`connect.${"fullname"}`)}{" "}
-                <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                id="fullName"
-                value={data.fullName}
-                className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
-                placeholder="FullName..."
-                onChange={handleChangeInput}
-              />
-              <p className="text-red-500">{error.fullName}</p>
-            </div>
+            <form onSubmit={handleSend}>
+              <h3 className="md:text-[1.6rem] lg:text-[1.8rem] font-bold text-start">
+                {t(`connect.${"send_message"}`)}
+              </h3>
+              <div className="flex flex-col items-start gap-2.5 mt-8">
+                <label htmlFor="fullName">
+                  {t(`connect.${"fullname"}`)}{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  id="fullName"
+                  value={data.fullName}
+                  className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                  placeholder="FullName..."
+                  onChange={handleChangeInput}
+                />
+                <p className="text-red-500">{error.fullName}</p>
+              </div>
 
-            <div className="flex flex-col items-start gap-2.5 mt-8">
-              <label htmlFor="email">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                value={data.email}
-                className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
-                placeholder="Email..."
-                onChange={(e) => {
-                  handleChangeInput(e);
-                }}
-              />
-              <p className="text-red-500">{error.email}</p>
-            </div>
+              <div className="flex flex-col items-start gap-2.5 mt-8">
+                <label htmlFor="email">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  value={data.email}
+                  className="w-full h-[4.2rem] border border-gray-400 dark:border-gray-600 outline-none pl-5 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                  placeholder="Email..."
+                  onChange={(e) => {
+                    handleChangeInput(e);
+                  }}
+                />
+                <p className="text-red-500">{error.email}</p>
+              </div>
 
-            <div className="flex flex-col items-start gap-2.5 mt-8">
-              <label htmlFor="message">
-                {t(`connect.${"message"}`)}{" "}
-                <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                rows={5}
-                name="message"
-                id="message"
-                value={data.message}
-                className="w-full border border-gray-400 dark:border-gray-600 outline-none p-4 rounded-md focus:border-amber-500 placeholder:text-gray-500"
-                placeholder="Message..."
-                onChange={handleChangeInput}
-              />
-              <p className="text-red-500">{error.message}</p>
-            </div>
+              <div className="flex flex-col items-start gap-2.5 mt-8">
+                <label htmlFor="message">
+                  {t(`connect.${"message"}`)}{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  rows={5}
+                  name="message"
+                  id="message"
+                  value={data.message}
+                  className="w-full border border-gray-400 dark:border-gray-600 outline-none p-4 rounded-md focus:border-amber-500 placeholder:text-gray-500"
+                  placeholder="Message..."
+                  onChange={handleChangeInput}
+                />
+                <p className="text-red-500">{error.message}</p>
+              </div>
 
-            <button
-              type="button"
-              className="w-full h-[4.2rem] flex items-center gap-2.5 justify-center bg-amber-600 mt-8 rounded-md hover:bg-amber-700 transition-colors duration-300 text-white"
-              onClick={handleSend}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                "Đang gửi...  "
-              ) : (
-                <>
-                  <span>{t(`connect.${"send"}`)}</span>
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                </>
-              )}
-            </button>
+              <button
+                type="submit"
+                className="w-full h-[4.2rem] flex items-center gap-2.5 justify-center bg-amber-600 mt-8 rounded-md hover:bg-amber-700 transition-colors duration-300 text-white"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  "Đang gửi...  "
+                ) : (
+                  <>
+                    <span>{t(`connect.${"send"}`)}</span>
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </AnimateMotion>
