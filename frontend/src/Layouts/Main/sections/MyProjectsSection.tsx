@@ -12,7 +12,7 @@ function MyProjectsSection() {
       image: manageClothes,
       description: t(`my_project.${`project.${"description"}`}`),
       techs: ["JS", "React", "NestJS", "PostgresSQL", "Redis"],
-      demoUrl: "https://nguyentrgkien.github.io/manage-sell-client/",
+      demoUrl: "https://manage-sell-client.vercel.app/",
       githubUrl: "https://github.com/NguyenTrgKien/manage-sell-client.git",
     },
   ];
