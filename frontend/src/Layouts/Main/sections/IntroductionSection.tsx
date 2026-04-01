@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 function IntroductionSection() {
   const { t } = useTranslation();
   const typedRef = useTyped({
-    strings: [t(`introduction.${"student"}`), "Backend Developer"],
+    strings: [t(`introduction.${"student"}`), "Web Developer"],
     typeSpeed: 60,
     backSpeed: 50,
     loop: true,

@@ -1,5 +1,6 @@
 import AnimateMotion from "../../../components/AnimateMotion";
 import manageClothes from "../../../assets/images/manage_clothes.png";
+import portfolio_img from "../../../assets/images/portfolio_img.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -10,12 +11,22 @@ function MyProjectsSection() {
       id: 1,
       name: t(`my_project.${`project.${"name"}`}`),
       image: manageClothes,
-      description: t(`my_project.${`project.${"description"}`}`),
+      description: t(`my_project.project.first.description`),
       techs: ["JS", "React", "NestJS", "PostgresSQL", "Redis"],
       demoUrl: "https://manage-sell-client.vercel.app/",
       githubUrl: "https://github.com/NguyenTrgKien/manage-sell-client.git",
     },
+    {
+      id: 2,
+      name: t(`my_project.${`project.${"name"}`}`),
+      image: portfolio_img,
+      description: t(`my_project.project.second.description`),
+      techs: ["JS", "React", "TailwindCSS", "Framer Motion"],
+      demoUrl: "https://porfolio-rho-one.vercel.app/",
+      githubUrl: "https://github.com/NguyenTrgKien/porfolio",
+    },
   ];
+
   return (
     <section id="projects">
       <div className="text-center mt-[12rem]">
@@ -42,7 +53,7 @@ function MyProjectsSection() {
               return (
                 <div
                   key={pro.id}
-                  className="rounded-2xl transition-discrete duration-300 text-start dark:border dark:border-gray-600 hover:-translate-y-5 shadow-xl text-[1.2rem] md:text-[1.4rem]"
+                  className="flex flex-col rounded-2xl transition-discrete duration-300 text-start dark:border dark:border-gray-600 hover:-translate-y-5 shadow-xl text-[1.2rem] md:text-[1.4rem]"
                 >
                   <img
                     src={pro.image}
@@ -57,9 +68,9 @@ function MyProjectsSection() {
                       {pro.description}
                     </p>
                     <p className="text-gray-800 dark:text-gray-200 font-bold">
-                      {t(`my_project.${"tech"}`)}:
+                      {t(`my_project.tech`)}:
                     </p>
-                    <div className="space-x-2.5 space-y-2.5 flex items-center flex-wrap">
+                    <div className="space-x-2.5 gap-2.5 flex items-center flex-wrap">
                       {pro.techs.map((tech, index) => {
                         return (
                           <span
@@ -71,21 +82,21 @@ function MyProjectsSection() {
                         );
                       })}
                     </div>
-                    <span className="block w-full border-t border-t-gray-400 dark:border-t-gray-600 my-10"></span>
-                    <div className="grid grid-cols-2 items-center gap-4">
-                      <Link
-                        to={pro.demoUrl}
-                        className="flex items-center justify-center w-full py-3.5 bg-amber-500 outline-none rounded-full hover:bg-amber-600 transition-colors duration-300 text-white"
-                      >
-                        {t(`my_project.${"live_demo"}`)}
-                      </Link>
-                      <Link
-                        to={pro.githubUrl}
-                        className="flex items-center justify-center w-full py-3.5 border-1 border-blue-600 text-blue-600 outline-none rounded-full dark:border-gray-600 dark:text-white"
-                      >
-                        GitHub
-                      </Link>
-                    </div>
+                    <span className="block w-full border-t border-t-gray-400 dark:border-t-gray-600 mt-10"></span>
+                  </div>
+                  <div className="grid grid-cols-2 items-center gap-4 mt-auto p-6">
+                    <Link
+                      to={pro.demoUrl}
+                      className="flex items-center justify-center w-full py-3.5 bg-amber-500 outline-none rounded-full hover:bg-amber-600 transition-colors duration-300 text-white"
+                    >
+                      {t(`my_project.${"live_demo"}`)}
+                    </Link>
+                    <Link
+                      to={pro.githubUrl}
+                      className="flex items-center justify-center w-full py-3.5 border-1 border-blue-600 text-blue-600 outline-none rounded-full dark:border-gray-600 dark:text-white"
+                    >
+                      GitHub
+                    </Link>
                   </div>
                 </div>
               );

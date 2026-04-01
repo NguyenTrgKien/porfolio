@@ -52,8 +52,14 @@
     "live_demo": "Xem trực tiếp",
     "web_development": "Phát triển web",
     "project": {
-      "name": "Quản lý bán hàng quần áo",
-      "description": "Quản lý bán hàng quần áo là một ứng dụng web giúp quản lý sản phẩm, tồn kho, đơn hàng và thông tin khách hàng trong cửa hàng bán lẻ."
+      "first": {
+        "name": "Quản lý bán hàng quần áo",
+        "description": "Quản lý bán hàng quần áo là một ứng dụng web giúp quản lý sản phẩm, tồn kho, đơn hàng và thông tin khách hàng trong cửa hàng bán lẻ."
+      },
+      "second": {
+        "name": "Portfolio cá nhân",
+        "description": "Portfolio cá nhân là một trang web giới thiệu về bản thân, kỹ năng, dự án và kinh nghiệm làm việc của một cá nhân, thường được sử dụng để tìm kiếm việc làm hoặc chia sẻ thông tin với người khác."
+      }
     }
   },
   "my_skill": {
