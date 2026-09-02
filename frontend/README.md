@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+# 🚀 Nguyen Trung Kien — Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive personal portfolio website built with **React + TypeScript + Vite**, featuring smooth animations, multi-language support, and an AI-powered chat assistant.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 🎨 **Modern UI/UX** — Clean design with dark mode support and Tailwind CSS
+- 🌍 **Multi-language** — Supports English (`en`) and Vietnamese (`vi`) via `i18next`
+- 🤖 **AI Chat Assistant** — Built-in contact AI panel powered by Socket.IO
+- 💼 **Projects Showcase** — Displays personal/professional projects with live links
+- 🛠️ **Skills Section** — Visual display of technical skills
+- 📬 **Contact Form** — Email integration via EmailJS
+- 📄 **CV Download** — One-click download of resume as PDF
+- 🔐 **Admin Panel** — Private route protected admin dashboard
+- ⚡ **Framer Motion** — Smooth page and section animations
+- 💬 **Typed.js** — Animated typewriter intro text
+- 📱 **Fully Responsive** — Works seamlessly on mobile, tablet, and desktop
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Category      | Technology              |
+| ------------- | ----------------------- |
+| Framework     | React 19 + TypeScript   |
+| Build Tool    | Vite 7                  |
+| Styling       | Tailwind CSS v4         |
+| Animation     | Framer Motion, Typed.js |
+| Icons         | Font Awesome            |
+| Routing       | React Router DOM v7     |
+| i18n          | i18next + react-i18next |
+| Email         | EmailJS                 |
+| Real-time     | Socket.IO Client        |
+| HTTP Client   | Axios                   |
+| Notifications | React Toastify          |
+| Date Utility  | Day.js                  |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📄 Portfolio Sections
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Section          | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| **Introduction** | Animated hero section with typed text effect    |
+| **About**        | Personal info, contact details, and CV download |
+| **Skills**       | Visual showcase of technical skills             |
+| **Projects**     | Portfolio of personal and professional projects |
+| **Connect**      | Contact form with EmailJS integration           |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v18 or higher
+- [npm](https://www.npmjs.com/) v9 or higher
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/NguyenTrgKien/porfolio.git
+cd porfolio/frontend
+
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+The app will be available at `http://localhost:5173`
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+---
+
+## 🌐 Internationalization
+
+The app supports **two languages**:
+
+| Language   | Code | File                       |
+| ---------- | ---- | -------------------------- |
+| English    | `en` | `src/i18n/locales/en.json` |
+| Vietnamese | `vi` | `src/i18n/locales/vi.json` |
+
+Language is auto-detected from the browser and can be toggled from the navigation bar.
+
+---
+
+## 📧 Email Setup (EmailJS)
+
+The contact form uses [EmailJS](https://www.emailjs.com/). To configure it:
+
+1. Create a free account at EmailJS
+2. Set up a service and email template
+3. Add your credentials to the config file in `src/configs/`
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Nguyen Trung Kien**
+
+- 📧 Email: nguyentrungkien040921@gmail.com
+- 📍 Location: Cai Rang, Can Tho City, Vietnam
+- 🎓 University: Tay Do University
+- 💼 GitHub: [@NguyenTrgKien](https://github.com/NguyenTrgKien)
