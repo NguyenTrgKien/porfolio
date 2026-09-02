@@ -59,6 +59,10 @@
       "second": {
         "name": "Portfolio cá nhân",
         "description": "Portfolio cá nhân là một trang web giới thiệu về bản thân, kỹ năng, dự án và kinh nghiệm làm việc của một cá nhân, thường được sử dụng để tìm kiếm việc làm hoặc chia sẻ thông tin với người khác."
+      },
+      "third": {
+        "name": "Sàn mua bán xe cũ",
+        "description": "Sàn mua bán xe cũ là ứng dụng web hỗ trợ quản lý tin đăng và giao dịch xe đã qua sử dụng, tích hợp AI để phân tích các thuộc tính và định giá xe."
       }
     }
   },

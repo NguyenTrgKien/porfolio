@@ -52,8 +52,18 @@
     "live_demo": "Live Demo",
     "web_development": "Web Development",
     "project": {
-      "name": "Clothing Sales Manager",
-      "description": "Clothing Sales Manager is a web application that helps manage clothing products, inventory, orders, and customer information in a retail store."
+      "first": {
+        "name": "Clothing Sales Manager",
+        "description": "Clothing Sales Manager is a web application that helps manage clothing products, inventory, orders, and customer information in a retail store."
+      },
+      "second": {
+        "name": "Personal Portfolio",
+        "description": "Personal Portfolio is a website that introduces an individual's profile, skills, projects, and professional experience."
+      },
+      "third": {
+        "name": "Used Car Marketplace",
+        "description": "Used Car Marketplace is a web application for managing used-car listings and transactions, with AI-powered vehicle attribute analysis and price estimation."
+      }
     }
   },
   "my_skill": {

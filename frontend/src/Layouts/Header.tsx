@@ -18,7 +18,7 @@ export const nav_list = [
   },
   {
     id: 2,
-    name: "home",
+    name: "about",
     link: "about",
   },
   {

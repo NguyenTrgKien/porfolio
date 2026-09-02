@@ -100,8 +100,8 @@ function AboutSection() {
           </div>
           <div className="mt-12 flex items-center justify-center sm:justify-start">
             <a
-              download
-              href="/"
+              download="Nguyen_Trung_Kien_CV.pdf"
+              href="/cv.pdf"
               className="px-8 py-3.5 flex items-center gap-2.5 bg-amber-500 text-white rounded-full hover:bg-amber-600 transition-colors duration-300 text-[1.2rem] md:text-[1.4rem]"
             >
               <FontAwesomeIcon icon={faDownload} />

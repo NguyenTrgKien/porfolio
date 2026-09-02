@@ -1,6 +1,7 @@
 import AnimateMotion from "../../../components/AnimateMotion";
 import manageClothes from "../../../assets/images/manage_clothes.png";
 import portfolio_img from "../../../assets/images/portfolio_img.png";
+import market_place from "../../../assets/images/market_place.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -9,21 +10,38 @@ function MyProjectsSection() {
   const projects = [
     {
       id: 1,
-      name: t(`my_project.${`project.${"name"}`}`),
+      name: t("my_project.project.first.name"),
       image: manageClothes,
       description: t(`my_project.project.first.description`),
       techs: ["JS", "React", "NestJS", "PostgresSQL", "Redis"],
-      demoUrl: "https://manage-sell-client.vercel.app/",
+      demoUrl: "https://manage-sell-client.vercel.app",
       githubUrl: "https://github.com/NguyenTrgKien/manage-sell-client.git",
     },
     {
       id: 2,
-      name: t(`my_project.${`project.${"name"}`}`),
+      name: t("my_project.project.second.name"),
       image: portfolio_img,
       description: t(`my_project.project.second.description`),
       techs: ["JS", "React", "TailwindCSS", "Framer Motion"],
-      demoUrl: "https://porfolio-rho-one.vercel.app/",
+      demoUrl: "https://porfolio-rho-one.vercel.app",
       githubUrl: "https://github.com/NguyenTrgKien/porfolio",
+    },
+    {
+      id: 3,
+      name: t("my_project.project.third.name"),
+      image: market_place,
+      description: t("my_project.project.third.description"),
+      techs: [
+        "React",
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Redis",
+        "RESTful API",
+        "Gemini-2.5-flash API",
+      ],
+      demoUrl: "https://used-motorcycle-market.vercel.app",
+      githubUrl: "https://github.com/NguyenTrgKien/used_motorcycle_market",
     },
   ];
 
@@ -85,12 +103,13 @@ function MyProjectsSection() {
                     <span className="block w-full border-t border-t-gray-400 dark:border-t-gray-600 mt-10"></span>
                   </div>
                   <div className="grid grid-cols-2 items-center gap-4 mt-auto p-6">
-                    <Link
-                      to={pro.demoUrl}
+                    <a
+                      target="_blank"
+                      href={pro.demoUrl}
                       className="flex items-center justify-center w-full py-3.5 bg-amber-500 outline-none rounded-full hover:bg-amber-600 transition-colors duration-300 text-white"
                     >
                       {t(`my_project.${"live_demo"}`)}
-                    </Link>
+                    </a>
                     <Link
                       to={pro.githubUrl}
                       className="flex items-center justify-center w-full py-3.5 border-1 border-blue-600 text-blue-600 outline-none rounded-full dark:border-gray-600 dark:text-white"
